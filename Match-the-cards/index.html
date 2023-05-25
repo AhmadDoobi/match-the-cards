@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Match-the-cards </title>
+  <link rel="icon" href="Assets/Images/bird.svg" />
+  <link rel="stylesheet" type="text/css" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet" />
+  <script src="script.js" async></script>
+</head>
+
+<body style="background-image: url('background.jpg'); background-repeat: no-repeat; background-size: 100% 100%; background-attachment: fixed;">
+
+  <div id="startingOverlay" class="overlay-text visible">
+    <div>Welcome 🖐</div>
+    Click to Start
+  </div>
+  <div id="gameover" class="overlay-text">
+    ☠
+    <div class="game-over">YOU LOST! 😈</div>
+    <span class="overlay-text-small">Click to retry</span>
+  </div>
+  <div id="victory" class="overlay-text">
+    YOU WON! 🥳
+    <span class="overlay-text-small">Click to play again</span>
+  </div>
+
+  <div class="game">
+    <div class="title">Match-the-cards</div>
+
+    <div class="game-info-control">
+      <h2>⏳ <span id="timer" class="game-info time">100</span></h2>
+      <h2>🔍 <span id="flips" class="game-info flips">0</span></h2>
+    </div>
+
+    <div class="game-cards">
+      <div class="game-card">
+        <div class="card-face front-face">
+          <img src="Assets/Images/bird.svg" alt="bird" class="card-face-texture" />
+        </div>
+        <div class="card-face back-face">
+          <img src="Assets/Images/animals//1.png" alt="bird" class="bird" />
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="card-face front-face">
+          <img src="Assets/Images/bird.svg" alt="bird" class="card-face-texture" />
+        </div>
+        <div class="card-face back-face">
+          <img src="Assets/Images/animals//1.png" alt="bird" class="bird" />
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="card-face front-face">
+          <img src="Assets/Images/bird.svg" alt="bird" class="card-face-texture" />
+        </div>
+        <div class="card-face back-face">
+          <img src="Assets/Images/animals//2.png" alt="bird" class="bird" />
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="card-face front-face">
+          <img src="Assets/Images/bird.svg" alt="bird" class="card-face-texture" />
+        </div>
+        <div class="card-face back-face">
+          <img src="Assets/Images/animals//2.png" alt="bird" class="bird" />
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="card-face front-face">
+          <img src="Assets/Images/bird.svg" alt="bird" class="card-face-texture" />
+        </div>
+        <div class="card-face back-face">
+          <img src="Assets/Images/animals//3.png" alt="bird" class="bird" />
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="card-face front-face">
+          <img src="Assets/Images/bird.svg" alt="bird" class="card-face-texture" />
+        </div>
+        <div class="card-face back-face">
+          <img src="Assets/Images/animals//3.png" alt="bird" class="bird" />
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="card-face front-face">
+          <img src="Assets/Images/bird.svg" alt="bird" class="card-face-texture" />
+        </div>
+        <div class="card-face back-face">
+          <img src="Assets/Images/animals//4.png" alt="bird" class="bird" />
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="card-face front-face">
+          <img src="Assets/Images/bird.svg" alt="bird" class="card-face-texture" />
+        </div>
+        <div class="card-face back-face">
+          <img src="Assets/Images/animals//4.png" alt="bird" class="bird" />
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="card-face front-face">
+          <img src="Assets/Images/bird.svg" alt="bird" class="card-face-texture" />
+        </div>
+        <div class="card-face back-face">
+          <img src="Assets/Images/animals//5.png" alt="bird" class="bird" />
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="card-face front-face">
+          <img src="Assets/Images/bird.svg" alt="bird" class="card-face-texture" />
+        </div>
+        <div class="card-face back-face">
+          <img src="Assets/Images/animals//5.png" alt="bird" class="bird" />
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="card-face front-face">
+          <img src="Assets/Images/bird.svg" alt="bird" class="card-face-texture" />
+        </div>
+        <div class="card-face back-face">
+          <img src="Assets/Images/animals//6.png" alt="bird" class="bird" />
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="card-face front-face">
+          <img src="Assets/Images/bird.svg" alt="bird" class="card-face-texture" />
+        </div>
+        <div class="card-face back-face">
+          <img src="Assets/Images/animals//7.png" alt="bird" class="bird" />
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="card-face front-face">
+          <img src="Assets/Images/bird.svg" alt="bird" class="card-face-texture" />
+        </div>
+        <div class="card-face back-face">
+          <img src="Assets/Images/animals//8.png" alt="bird" class="bird" />
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="card-face front-face">
+          <img src="Assets/Images/bird.svg" alt="bird" class="card-face-texture" />
+        </div>
+        <div class="card-face back-face">
+          <img src="Assets/Images/animals//7.png" alt="bird" class="bird" />
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="card-face front-face">
+          <img src="Assets/Images/bird.svg" alt="bird" class="card-face-texture" />
+        </div>
+        <div class="card-face back-face">
+          <img src="Assets/Images/animals//8.png" alt="bird" class="bird" />
+        </div>
+      </div>
+      <div class="game-card">
+        <div class="card-face front-face">
+          <img src="Assets/Images/bird.svg" alt="bird" class="card-face-texture" />
+        </div>
+        <div class="card-face back-face">
+          <img src="Assets/Images/animals//6.png" alt="bird" class="bird" />
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

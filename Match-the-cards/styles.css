@@ -1,0 +1,187 @@
+* {
+    box-sizing: border-box;
+}
+
+/* Set the font family for the HTML element */
+html {
+    font-family: "Lobster", cursive;
+}
+
+body {  
+    text-align: center;
+    color: rgb(0, 204, 255);
+    font-size: 100%;
+}
+
+.title {
+    color: #0f78e1;
+    font-size: 4em;
+    text-align: center;
+    font-weight: lighter;
+}
+
+.game-info-control {
+    width: 500px;
+    margin: auto;
+    color: #0f78e1;
+    position: relative;
+    font-size: 1.4em;
+    display: flex;
+    justify-content: space-between;
+}
+
+.game-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 1.4em;
+    width: 500px;
+    justify-content: center;
+    margin: auto;
+}
+
+.game-card {
+    height: 120px;
+    background-image: linear-gradient(rgb(186, 196, 209), #94a5b7); /* Set a linear gradient background for the cards */
+    width: 100px;
+    transition: all 0.2s ease-in-out; /* Add a smooth transition effect */
+    position: relative;
+    backface-visibility: hidden;
+    border-radius: 7px;
+}
+
+.game-card:hover {
+    transform: scale(1.07); /* Enlarge the card on hover */
+    box-shadow: 0px 0px 5px #b5b3ac, 0px 0px 15px #181717, 0px 0px 10px #f6d55c,
+        0px 0px 25px #05dfc9; /* Add a box shadow on hover */
+}
+
+.card-face {
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all .5s ease-in-out; /* Add a smooth transition effect for card flipping */
+    border-radius: 7px;
+}
+
+.back-face {
+    transform: rotateY(180deg); /* Flip the card to show the back face */
+    background-image: linear-gradient(rgb(108, 128, 158), #94a5b7); /* Set a linear gradient background for the back face */
+}
+
+.game-card.visible .front-face {
+    transform: rotateY(180deg); /* Flip the card to show the front face */
+}
+
+.game-card.visible {
+    transform: rotateY(0); /* Reset the transform for visible cards */
+}
+
+.game-card.visible .back-face {
+    transform: rotateY(0); /* Reset the transform for visible cards */
+}
+
+.front-face:hover .card-face-texture {
+    animation: fly 1s ease-in-out infinite; /* Add an animation on hover */
+}
+
+@keyframes fly {
+    0% {}
+
+    50% {
+        transform: translateY(-20px) rotate(10deg) translateX(10px); /* Apply a flying effect */
+    }
+
+    100% {
+        transform: translateX(0) rotate(0) translateY(0);
+    }
+}
+
+.card-face-texture {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    transition: all 0.3s ease-in-out; /* Add a smooth transition effect for card textures */
+}
+
+.bird {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    transition: all 0.3s ease-in-out; /* Add a smooth transition effect for bird animation */
+}
+
+.game-card.matched .bird {
+    animation: dance 1s linear infinite; /* Add an animation for matched cards */
+}
+
+@keyframes dance {
+    0%,
+    100% {
+        transform: rotate(0);
+    }
+
+    25% {
+        transform: rotate(10deg);
+    }
+
+    75% {
+        transform: rotate(-10deg);
+    }
+}
+
+.overlay-text {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    margin: 0;
+    padding: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    color: #0f78e1;
+    visibility: hidden;
+    transition: all 1s ease-in-out;
+}
+
+.overlay-text.visible {
+    animation: overlay-show 1s linear forwards; /* Add an animation to show the overlay text */
+    z-index: 10;
+    visibility: visible;
+    display: flex;
+    flex-direction: column;
+}
+
+@keyframes overlay-show {
+    0% {
+        background-color: rgba(0, 0, 0, 0);
+        font-size: 0;
+    }
+
+    100% {
+        background-color: rgba(0, 0, 0, 0.8);
+        font-size: 10em;
+    }
+}
+
+@keyframes overlay-hide {
+    0% {
+        background-color: rgba(0, 0, 0, 0.8);
+        font-size: 10em;
+    }
+
+    100% {
+        background-color: rgba(0, 0, 0, 0);
+        font-size: 0;
+        visibility: hidden;
+    }
+}
+
+.overlay-text-small {
+    font-size: .3em;
+}
