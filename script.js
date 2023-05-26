@@ -76,7 +76,9 @@ class FlipOrQuit {
     this.remainingTime = totalTime; // Remaining time for the game
 
     this.cards = cards; // Array of card elements
-
+    
+    this.wins = 0; // number of wins 
+    
     // Get elements from the DOM
     this.flips = doc.getElementById("flips");
     this.timer = doc.getElementById("timer");
@@ -99,7 +101,7 @@ class FlipOrQuit {
       this.busy = false; // Set game as not busy
       this.audioController.startMusic(); // Start playing background music
       this.countDown = this.startTimer(); // Start the timer
-    }, 500);
+    }, 1000);
 
     this.flips.innerText = this.flipsCounter; // Display the number of flips
     this.timer.innerText = this.remainingTime; // Display the remaining time
@@ -168,6 +170,7 @@ class FlipOrQuit {
     this.matchedCards.push(card1); // Add matched cards to the array
     this.matchedCards.push(card2);
 
+
     card1.classList.add("matched"); // Add the matched class to the cards
     card2.classList.add("matched");
 
@@ -200,6 +203,10 @@ class FlipOrQuit {
     doc.getElementById("victory").style.animation =
       "overlay-show 1s linear forwards";
     
+
+    this.wins++; // Increment the number of wins
+
+    doc.getElementById("wins").innerText = this.wins;
   }
 
   // Actions to perform when the player loses the game
