@@ -11,17 +11,28 @@ class AudioController {
       "Assets/Audios/gameover3.wav"
     ];
 
+    // Create an array of audio files for victory sounds
+    var victorySounds = [
+      "Assets/Audios/victory.wav",
+      "Assets/Audios/victory2.wav"
+    ];
+
     // Generate a random index for selecting a game over sound
-    var randomIndex = Math.floor(Math.random() * gameOverSounds.length);
+    var randomGameOverSound = Math.floor(Math.random() * gameOverSounds.length);
+
+    // generate a random index for selecting a victory sound 
+    var randomVictorySound = Math.floor(Math.random() * victorySounds.length);
 
     // Initialize audio objects with corresponding audio files
     this.birdsMusic = new Audio("Assets/Audios/birds.wav");
     this.flipSound = new Audio("Assets/Audios/flip.wav");
     this.matchSound = new Audio("Assets/Audios/match.wav");
-    this.victorySound = new Audio("Assets/Audios/victory.wav");
     
     // Assign a random game over sound to this.gameOverSound
-    this.gameOverSound = new Audio(gameOverSounds[randomIndex]);
+    this.gameOverSound = new Audio(gameOverSounds[randomGameOverSound]);
+
+    // Assign a random victory sound to this.victorySound
+    this.victorySound = new Audio(victorySounds[randomVictorySound]);
 
     // Set properties for audio objects
     this.birdsMusic.loop = 1; // Loop the background music
@@ -188,6 +199,7 @@ class FlipOrQuit {
     doc.getElementById("victory").classList.add("visible"); // Show the victory message
     doc.getElementById("victory").style.animation =
       "overlay-show 1s linear forwards";
+    
   }
 
   // Actions to perform when the player loses the game
