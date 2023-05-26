@@ -4,12 +4,24 @@ let doc = document;
 // Define a class "AudioController" to manage game audio
 class AudioController {
   constructor() {
+     // Create an array of audio files for game over sounds
+     var gameOverSounds = [
+      "Assets/Audios/gameover1.wav",
+      "Assets/Audios/gameover2.wav",
+      "Assets/Audios/gameover3.wav"
+    ];
+
+    // Generate a random index for selecting a game over sound
+    var randomIndex = Math.floor(Math.random() * gameOverSounds.length);
+
     // Initialize audio objects with corresponding audio files
     this.birdsMusic = new Audio("Assets/Audios/birds.wav");
     this.flipSound = new Audio("Assets/Audios/flip.wav");
     this.matchSound = new Audio("Assets/Audios/match.wav");
     this.victorySound = new Audio("Assets/Audios/victory.wav");
-    this.gameOverSound = new Audio("Assets/Audios/gameover1.wav");
+    
+    // Assign a random game over sound to this.gameOverSound
+    this.gameOverSound = new Audio(gameOverSounds[randomIndex]);
 
     // Set properties for audio objects
     this.birdsMusic.loop = 1; // Loop the background music
