@@ -107,14 +107,14 @@ body {
     transition: all 0.3s ease-in-out; /* Add a smooth transition effect for card textures */
 }
 
-.wolf {
+.bird{
     position: absolute;
     width: 80px;
     height: 80px;
     transition: all 0.3s ease-in-out; /* Add a smooth transition effect for wolf animation */
 }
 
-.game-card.matched .wolf {
+.game-card.matched .bird {
     animation: dance 1s linear infinite; /* Add an animation for matched cards */
 }
 

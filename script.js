@@ -24,7 +24,7 @@ class AudioController {
     var randomVictorySound = Math.floor(Math.random() * victorySounds.length);
 
     // Initialize audio objects with corresponding audio files
-    this.birdsMusic = new Audio("Assets/Audios/birds.wav");
+    this.backgroundSound = new Audio("Assets/Audios/backgroundSound.wav");
     this.flipSound = new Audio("Assets/Audios/flip.wav");
     this.matchSound = new Audio("Assets/Audios/match.wav");
     
@@ -35,19 +35,19 @@ class AudioController {
     this.victorySound = new Audio(victorySounds[randomVictorySound]);
 
     // Set properties for audio objects
-    this.birdsMusic.loop = 1; // Loop the background music
-    this.birdsMusic.volume = 0.6; // Set volume for the background music
+    this.backgroundSound.loop = 1; // Loop the background music
+    this.backgroundSound.volume = 0.6; // Set volume for the background music
     this.flipSound.volume = 0.5; // Set volume for the flip sound
   }
 
   // Play the background music
   startMusic() {
-    this.birdsMusic.play();
+    this.backgroundSound.play();
   }
   // Stop the background music
   stopMusic() {
-    this.birdsMusic.pause();
-    this.birdsMusic.currentTime = 0;
+    this.backgroundSound.pause();
+    this.backgroundSound.currentTime = 0;
   }
   // Play the flip sound
   flip() {
