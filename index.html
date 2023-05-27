@@ -11,6 +11,13 @@
   <script src="script.js" async></script>
 </head>
 
+<div class="difficulty-buttons">
+  <button id="easy-btn" class="difficulty-btn">Easy</button>
+  <button id="normal-btn" class="difficulty-btn">Normal</button>
+  <button id="hard-btn" class="difficulty-btn">Hard</button>
+</div>
+
+
 <body style="background-image: url('Assets/Images/background.jpg'); background-repeat: no-repeat; background-size: 100% 100%; background-attachment: fixed;">
 
   <div id="startingOverlay" class="overlay-text visible">
@@ -31,7 +38,7 @@
     <div class="title">Match-the-cards</div>
 
     <div class="game-info-control">
-      <h2>⏳ <span id="timer" class="game-info time">100</span></h2>
+      <h2>⏳ <span id="timer" class="game-info time">0</span></h2>
       <h2>🔍 <span id="flips" class="game-info flips">0</span></h2>
       <h2>🌟 <span id="wins" class="game-info wins">0</span></h2>
       <h2>🏆 <span id="bestFlipsRecord" class="game-info bestFlipsRecord"></span></h2>

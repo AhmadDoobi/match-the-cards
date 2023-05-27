@@ -157,6 +157,33 @@ body {
     flex-direction: column;
 }
 
+.difficulty-buttons {
+    position: fixed;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+  }
+  
+  .difficulty-btn {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .difficulty-btn:hover {
+    background-color: #2980b9;
+  }
+  
+  .difficulty-btn:active {
+    background-color: #1f6698;
+  }
+  
 @keyframes overlay-show {
     0% {
         background-color: rgba(0, 0, 0, 0);
