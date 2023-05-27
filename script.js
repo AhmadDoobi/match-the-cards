@@ -88,12 +88,12 @@ class FlipOrQuit {
   }
 
   // Start the game
-  startGame() {
-    this.remainingTime = this.totalTime; // Reset remaining time
+  startGame(time) {
+    this.remainingTime = time; // Reset remaining time
     this.cardToCheck = null; // Store the current card being checked
     this.matchedCards = []; // Store the matched cards
     this.busy = true; // Indicates if the game is busy (e.g., flipping cards)
-    this.flipsCounter = 0; // Count the number of flips
+    this.flipsCounter = 0; // reset the number of flips
 
     this.hideCards(); // Hide all cards
 
@@ -102,7 +102,7 @@ class FlipOrQuit {
       this.busy = false; // Set game as not busy
       this.audioController.startMusic(); // Start playing background music
       this.countDown = this.startTimer(); // Start the timer
-    }, 1000);
+    }, 2000);
 
     this.flips.innerText = this.flipsCounter; // Display the number of flips
     this.timer.innerText = this.remainingTime; // Display the remaining time
@@ -115,7 +115,7 @@ class FlipOrQuit {
       if (this.remainingTime === 0) {
         this.gameover(); // If time runs out, end the game
       }
-    }, 1000);
+    }, 2000);
   }
 
   // Hide all cards by removing visible and matched classes
@@ -252,28 +252,55 @@ class FlipOrQuit {
 
 // Function to start the game when the DOM is loaded
 function startLoading() {
-  let overlays = Array.from(doc.getElementsByClassName("overlay-text"));
-  let cards = Array.from(doc.getElementsByClassName("game-card"));
-  let game = new FlipOrQuit(60, cards); // Create a new instance of FlipOrQuit
-
-  overlays.forEach((overlay) => {
-    overlay.onclick = () => {
-      overlay.style.animation = "overlay-hide 1s linear forwards";
-      game.startGame(); // Start the game when an overlay is clicked
-    };
-  });
-
-  cards.forEach((card) => {
-    card.onclick = () => {
-      game.flipCard(card); // Flip a card when clicked
-    };
-  });
-}
-
-// Check if the DOM is already loaded, if not, wait for it to load
-if (doc.readyState === "loading") {
-  doc.addEventListener("DOMContentLoaded", startLoading());
-} else {
-  startLoading();
+    // Difficulty buttons
+    const easyBtn = document.getElementById('easy-btn');
+    const normalBtn = document.getElementById('normal-btn');
+    const hardBtn = document.getElementById('hard-btn');
+  
+    let overlays = Array.from(doc.getElementsByClassName("overlay-text"));
+    let cards = Array.from(doc.getElementsByClassName("game-card"));
+    let game = new FlipOrQuit(60, cards); // Create a new instance of FlipOrQuit
+  
+    overlays.forEach((overlay) => {
+      overlay.onclick = () => {
+        overlay.style.animation = "overlay-hide 1s linear forwards";
+        game.startGame(); // Start the game when an overlay is clicked
+      };
+    });
+  
+    cards.forEach((card) => {
+      card.onclick = () => {
+        game.flipCard(card); // Flip a card when clicked
+      };
+    });
+  
+    // Event listeners for difficulty buttons
+    easyBtn.addEventListener('click', () => {
+      easyBtn.classList.add('highlighted');
+      normalBtn.classList.remove('highlighted');
+      hardBtn.classList.remove('highlighted');
+      game.startGame(90); // Start the game with easy difficulty (90 seconds)
+    });
+  
+    normalBtn.addEventListener('click', () => {
+      easyBtn.classList.remove('highlighted');
+      normalBtn.classList.add('highlighted');
+      hardBtn.classList.remove('highlighted');
+      game.startGame(60); // Start the game with normal difficulty (60 seconds)
+    });
+  
+    hardBtn.addEventListener('click', () => {
+      easyBtn.classList.remove('highlighted');
+      normalBtn.classList.remove('highlighted');
+      hardBtn.classList.add('highlighted');
+      game.startGame(45); // Start the game with hard difficulty (45 seconds)
+    });
+  }
+  
+  // Check if the DOM is already loaded, if not, wait for it to load
+  if (doc.readyState === "loading") {
+    doc.addEventListener("DOMContentLoaded", startLoading());
+  } else {
+    startLoading();
 }
 

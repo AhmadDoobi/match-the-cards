@@ -196,6 +196,15 @@ body {
     }
 }
 
+.highlighted {
+    /* Style for the highlighted button */
+    background-color: #ffcc00;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+  }
+  
+
 @keyframes overlay-hide {
     0% {
         background-color: rgba(0, 0, 0, 0.8);
