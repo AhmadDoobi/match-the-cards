@@ -77,6 +77,7 @@ class FlipOrQuit {
 
     this.cards = cards; // Array of card elements
     
+    this.bestFlipsRecord = Infinity; // initialize best record to infinity 
     this.wins = 0; // number of wins 
     
     // Get elements from the DOM
@@ -203,10 +204,25 @@ class FlipOrQuit {
     doc.getElementById("victory").style.animation =
       "overlay-show 1s linear forwards";
     
+      let randIdx = Math.floor(Math.random() * 2);
+
+      if (randIdx === 0)
+        this.audioController.victorySound = this.victorySound = new Audio(
+          "Assets/Audios/victory.wav"
+        );
+      else if (randIdx === 1)
+        this.audioController.victorySound = this.victorySound = new Audio(
+          "Assets/Audios/victory2.wav"
+        );
 
     this.wins++; // Increment the number of wins
 
-    doc.getElementById("wins").innerText = this.wins;
+    if (this.flipsCounter < this.bestFlipsRecord) {
+      this.bestFlipsRecord = this.flipsCounter; // Update the best record if the current game has fewer flips
+      doc.getElementById("bestFlipsRecord").innerText = this.bestFlipsRecord; // Update the best record element in the HTML
+    };
+
+    doc.getElementById("wins").innerText = this.wins; // Update the wins elemnt in the HTML
   }
 
   // Actions to perform when the player loses the game
