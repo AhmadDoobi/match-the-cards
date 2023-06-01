@@ -194,11 +194,12 @@ body {
         background-color: rgba(0, 0, 0, 0.8);
         font-size: 10em;
     }
-}
+} 
+  
 
 .highlighted {
     /* Style for the highlighted button */
-    background-color: #ffcc00;
+    background-color: #19aed3;
     color: #ffffff;
     border: 2px solid #ffffff;
     box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);

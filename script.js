@@ -1,6 +1,9 @@
 // Define a variable "doc" and assign the "document" object to it
 let doc = document;
 
+// Define variable "gameDifficulty"
+var gameDifficulty;
+
 // Define a class "AudioController" to manage game audio
 class AudioController {
   constructor() {
@@ -69,6 +72,8 @@ class AudioController {
   }
 }
 
+
+
 // Define a class "FlipOrQuit" to manage the memory card game
 class FlipOrQuit {
   constructor(totalTime, cards) {
@@ -77,14 +82,25 @@ class FlipOrQuit {
 
     this.cards = cards; // Array of card elements
     
-    this.bestFlipsRecord = Infinity; // initialize best record to infinity 
-    this.wins = 0; // number of wins 
+    this.bestEasyFlipsRecord = Infinity; // initialize best easy record to infinity 
+    this.bestNormalFlipsRecord = Infinity; // initialize best normal record to infinity 
+    this.bestHardFlipsRecord = Infinity; // initialize best hard record to infinity 
+
+    this.easyWins = 0; // number of easy wins 
+    this.normalWins = 0; // number of normal wins 
+    this.hardWins = 0; // number of hard wins 
     
     // Get elements from the DOM
     this.flips = doc.getElementById("flips");
     this.timer = doc.getElementById("timer");
 
     this.audioController = new AudioController(); // Create an instance of the AudioController
+  } 
+
+  resetTimers() {
+    clearInterval(this.countdown); // Clear the countdown interval
+    this.timer.innerText = this.totalTime; // Reset the timer display
+    this.timeRemaining = this.totalTime; // Reset the remaining time
   }
 
   // Start the game
@@ -101,22 +117,34 @@ class FlipOrQuit {
       this.shuffleCards(); // Shuffle the cards
       this.busy = false; // Set game as not busy
       this.audioController.startMusic(); // Start playing background music
-      this.countDown = this.startTimer(); // Start the timer
-    }, 2000);
+      this.countDown = this.startTimer(time); // Start the timer
+    }, 1000);
 
     this.flips.innerText = this.flipsCounter; // Display the number of flips
     this.timer.innerText = this.remainingTime; // Display the remaining time
   }
 
-  // Start the timer and update the remaining time
-  startTimer() {
-    return setInterval(() => {
-      this.timer.innerText = --this.remainingTime; // Decrease remaining time
-      if (this.remainingTime === 0) {
-        this.gameover(); // If time runs out, end the game
-      }
-    }, 2000);
-  }
+  
+  
+
+// Start the timer and update the remaining time
+startTimer(time) {
+  this.remainingTime = time; // Set the remaining time
+
+  const startTime = Date.now();
+  const countdown = () => {
+    const elapsedTime = Date.now() - startTime;
+    const remainingTime = Math.max(0, this.remainingTime - Math.floor(elapsedTime / 1000));
+    this.timer.innerText = remainingTime;
+    if (remainingTime === 0) {
+      this.gameover();
+    } else {
+      requestAnimationFrame(countdown);
+    }
+  };
+  requestAnimationFrame(countdown);
+}
+
 
   // Hide all cards by removing visible and matched classes
   hideCards() {
@@ -215,14 +243,30 @@ class FlipOrQuit {
           "Assets/Audios/victory2.wav"
         );
 
-    this.wins++; // Increment the number of wins
-
-    if (this.flipsCounter < this.bestFlipsRecord) {
-      this.bestFlipsRecord = this.flipsCounter; // Update the best record if the current game has fewer flips
-      doc.getElementById("bestFlipsRecord").innerText = this.bestFlipsRecord; // Update the best record element in the HTML
-    };
-
-    doc.getElementById("wins").innerText = this.wins; // Update the wins elemnt in the HTML
+    if (gameDifficulty === 'easy'){
+      this.easyWins++;
+      doc.getElementById("easyWins").innerText = this.easyWins; // Update the easy wins elemnt in the HTML
+      if (this.flipsCounter < this.bestEasyFlipsRecord) {
+        this.bestEasyFlipsRecord = this.flipsCounter; // Update the best easy record if the current game has fewer flips
+        doc.getElementById("bestEasyFlipsRecord").innerText = this.bestEasyFlipsRecord; // Update the best easy record element in the HTML
+      }
+    }  
+    else if (gameDifficulty === 'normal'){
+      this.normalWins++;
+      doc.getElementById("normalWins").innerText = this.normalWins; // Update the normal wins elemnt in the HTML
+      if (this.flipsCounter < this.bestNormalFlipsRecord) {
+        this.bestNormalFlipsRecord = this.flipsCounter; // Update the best easy record if the current game has fewer flips
+        doc.getElementById("bestNormalFlipsRecord").innerText = this.bestNormalFlipsRecord; // Update the best normal record element in the HTML
+      }
+    }  
+    else if (gameDifficulty === 'hard'){
+      this.hardWins++;
+      doc.getElementById("hardWins").innerText = this.hardWins; // Update the hard wins elemnt in the HTML
+      if (this.flipsCounter < this.bestHardFlipsRecord) {
+        this.bestHardFlipsRecord = this.flipsCounter; // Update the best easy record if the current game has fewer flips
+        doc.getElementById("bestHardFlipsRecord").innerText = this.bestHardFlipsRecord; // Update the best hard record element in the HTML
+      }
+    }  
   }
 
   // Actions to perform when the player loses the game
@@ -264,7 +308,7 @@ function startLoading() {
     overlays.forEach((overlay) => {
       overlay.onclick = () => {
         overlay.style.animation = "overlay-hide 1s linear forwards";
-        game.startGame(); // Start the game when an overlay is clicked
+        game.startGame(60); // Start the game when an overlay is clicked
       };
     });
   
@@ -279,22 +323,29 @@ function startLoading() {
       easyBtn.classList.add('highlighted');
       normalBtn.classList.remove('highlighted');
       hardBtn.classList.remove('highlighted');
-      game.startGame(90); // Start the game with easy difficulty (90 seconds)
+      this.startGame(90); // Start the game with easy difficulty (90 seconds)
+      this.resetTimers();
+      gameDifficulty = 'easy';
     });
-  
+    
     normalBtn.addEventListener('click', () => {
       easyBtn.classList.remove('highlighted');
       normalBtn.classList.add('highlighted');
       hardBtn.classList.remove('highlighted');
       game.startGame(60); // Start the game with normal difficulty (60 seconds)
+      this.resetTimers();
+      gameDifficulty = 'normal';
     });
-  
+    
     hardBtn.addEventListener('click', () => {
       easyBtn.classList.remove('highlighted');
       normalBtn.classList.remove('highlighted');
       hardBtn.classList.add('highlighted');
       game.startGame(45); // Start the game with hard difficulty (45 seconds)
+      this.resetTimers();
+      gameDifficulty = 'hard';
     });
+    
   }
   
   // Check if the DOM is already loaded, if not, wait for it to load
