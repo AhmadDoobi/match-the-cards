@@ -222,3 +222,36 @@ body {
 .overlay-text-small {
     font-size: .3em;
 }
+
+.container {
+    position: relative;
+  }
+  
+  .game-statistics {
+    position: absolute;
+    top:0;
+    left:0;
+    transform: translateY(-5%);
+    background: none; /* Remove the background */
+    color: #0f78e1;
+    font-size: 1.4em;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+  }
+  
+  .game-statistics h2 {
+    margin-top: 0;
+  }
+  
+  .game-statistics div {
+    margin-bottom: 10px;
+  }
+  
+  .game-statistics strong {
+    font-weight: bold;
+    margin-right: 5px;
+  }
+  
+  
