@@ -1,8 +1,8 @@
 {
   "name": "match-the-cards",
-  "version": "1.0.0",
+  "version": "1.3.6",
   "description": "",
-  "main": "script.js",
+  "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
