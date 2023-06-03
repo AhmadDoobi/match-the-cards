@@ -5,37 +5,25 @@ let doc = document;
 var gameDifficulty;
 
 // Define a class "AudioController" to manage game audio
-class AudioController {
+class audioController {
   constructor() {
-     // Create an array of audio files for game over sounds
-     var gameOverSounds = [
+    // Create an array of audio files for game over sounds
+    this.gameOverSounds = [
       "Assets/Audios/gameover1.wav",
       "Assets/Audios/gameover2.wav",
       "Assets/Audios/gameover3.wav"
     ];
 
     // Create an array of audio files for victory sounds
-    var victorySounds = [
+    this.victorySounds = [
       "Assets/Audios/victory.wav",
       "Assets/Audios/victory2.wav"
     ];
-
-    // Generate a random index for selecting a game over sound
-    var randomGameOverSound = Math.floor(Math.random() * gameOverSounds.length);
-
-    // generate a random index for selecting a victory sound 
-    var randomVictorySound = Math.floor(Math.random() * victorySounds.length);
 
     // Initialize audio objects with corresponding audio files
     this.backgroundSound = new Audio("Assets/Audios/backgroundSound.wav");
     this.flipSound = new Audio("Assets/Audios/flip.wav");
     this.matchSound = new Audio("Assets/Audios/match.wav");
-    
-    // Assign a random game over sound to this.gameOverSound
-    this.gameOverSound = new Audio(gameOverSounds[randomGameOverSound]);
-
-    // Assign a random victory sound to this.victorySound
-    this.victorySound = new Audio(victorySounds[randomVictorySound]);
 
     // Set properties for audio objects
     this.backgroundSound.loop = 1; // Loop the background music
@@ -62,12 +50,20 @@ class AudioController {
   }
   // Play the victory sound and stop the background music
   victory() {
-    this.stopMusic();
+    // Generate a random index for selecting a victory sound
+    const randomIndex = Math.floor(Math.random() * this.victorySounds.length);
+    // Get the selected victory sound file based on the random index
+    this.victorySound = new Audio(this.victorySounds[randomIndex]);
+    this.stopMusic(); // stops background music
     this.victorySound.play();
   }
   // Play the game over sound and stop the background music
   gameover() {
-    this.stopMusic();
+    // Generate a random index for selecting a game over sound
+    const randomIndex = Math.floor(Math.random() * this.gameOverSounds.length);
+    // Get the selected game over sound file based on the random index
+    this.gameOverSound = new Audio(this.gameOverSounds[randomIndex]);
+    this.stopMusic(); // stops background music
     this.gameOverSound.play();
   }
 }
@@ -94,56 +90,60 @@ class FlipOrQuit {
     this.flips = doc.getElementById("flips");
     this.timer = doc.getElementById("timer");
 
-    this.audioController = new AudioController(); // Create an instance of the AudioController
+    this.audioController = new audioController(); // Create an instance of the AudioController
   } 
 
-  resetTimers() {
-    clearInterval(this.countdown); // Clear the countdown interval
-    this.timer.innerText = this.totalTime; // Reset the timer display
-    this.timeRemaining = this.totalTime; // Reset the remaining time
-  }
-
-  // Start the game
   startGame(time) {
+    this.gameInProgress = true;
+    if (this.countDown) {
+      clearInterval(this.countDown); // Clear the timer that ends the game
+    }
     this.remainingTime = time; // Reset remaining time
     this.cardToCheck = null; // Store the current card being checked
     this.matchedCards = []; // Store the matched cards
     this.busy = true; // Indicates if the game is busy (e.g., flipping cards)
-    this.flipsCounter = 0; // reset the number of flips
-
+    this.flipsCounter = 0; // Reset the number of flips
+  
     this.hideCards(); // Hide all cards
-
+  
     setTimeout(() => {
       this.shuffleCards(); // Shuffle the cards
       this.busy = false; // Set game as not busy
       this.audioController.startMusic(); // Start playing background music
-      this.countDown = this.startTimer(time); // Start the timer
+      this.countDown = this.startTimer(time); // Start the timer that ends the game
     }, 1000);
-
+  
     this.flips.innerText = this.flipsCounter; // Display the number of flips
     this.timer.innerText = this.remainingTime; // Display the remaining time
   }
-
-  
   
 
-// Start the timer and update the remaining time
-startTimer(time) {
-  this.remainingTime = time; // Set the remaining time
-
-  const startTime = Date.now();
-  const countdown = () => {
-    const elapsedTime = Date.now() - startTime;
-    const remainingTime = Math.max(0, this.remainingTime - Math.floor(elapsedTime / 1000));
-    this.timer.innerText = remainingTime;
-    if (remainingTime === 0) {
-      this.gameover();
-    } else {
-      requestAnimationFrame(countdown);
+  startTimer(time) {
+    if (this.timerCountDown) {
+      cancelAnimationFrame(this.timerCountDown); // Clear the timer for updating the remaining time display
     }
-  };
-  requestAnimationFrame(countdown);
-}
+  
+    this.remainingTime = time; // Set the remaining time
+  
+    const startTime = Date.now();
+    const countdown = () => {
+      const elapsedTime = Date.now() - startTime;
+      const remainingTime = Math.max(0, this.remainingTime - Math.floor(elapsedTime / 1000));
+      this.timer.innerText = remainingTime;
+      if (remainingTime === 0) {
+        if (this.gameInProgress){
+          this.gameOver();
+        }
+        else {
+          return;
+        }
+      } 
+      else {
+        this.timerCountDown = requestAnimationFrame(countdown); // Store the timer ID for updating the remaining time display
+      }
+    };
+    this.timerCountDown = requestAnimationFrame(countdown); // Start the timer for updating the remaining time display
+  }
 
 
   // Hide all cards by removing visible and matched classes
@@ -226,22 +226,11 @@ startTimer(time) {
 
   // Actions to perform when the player wins the game
   victory() {
-    clearInterval(this.countDown); // Stop the timer
+    this.gameInProgress = false;
     this.audioController.victory(); // Play the victory sound
     doc.getElementById("victory").classList.add("visible"); // Show the victory message
     doc.getElementById("victory").style.animation =
       "overlay-show 1s linear forwards";
-    
-      let randIdx = Math.floor(Math.random() * 2);
-
-      if (randIdx === 0)
-        this.audioController.victorySound = this.victorySound = new Audio(
-          "Assets/Audios/victory.wav"
-        );
-      else if (randIdx === 1)
-        this.audioController.victorySound = this.victorySound = new Audio(
-          "Assets/Audios/victory2.wav"
-        );
 
     if (gameDifficulty === 'easy'){
       this.easyWins++;
@@ -270,27 +259,12 @@ startTimer(time) {
   }
 
   // Actions to perform when the player loses the game
-  gameover() {
-    clearInterval(this.countDown); // Stop the timer
+  gameOver() {
+    this.gameInProgress = false;
     this.audioController.gameover(); // Play the game over sound
     doc.getElementById("gameover").classList.add("visible"); // Show the game over message
     doc.getElementById("gameover").style.animation =
       "overlay-show 1s linear forwards";
-
-    let randIdx = Math.floor(Math.random() * 3);
-
-    if (randIdx === 0)
-      this.audioController.gameOverSound = this.gameOverSound = new Audio(
-        "Assets/Audios/gameover1.wav"
-      );
-    else if (randIdx === 1)
-      this.audioController.gameOverSound = this.gameOverSound = new Audio(
-        "Assets/Audios/gameover2.wav"
-      );
-    else if (randIdx === 2)
-      this.audioController.gameOverSound = this.gameOverSound = new Audio(
-        "Assets/Audios/gameover3.wav"
-      );
   }
 }
 
@@ -308,7 +282,10 @@ function startLoading() {
     overlays.forEach((overlay) => {
       overlay.onclick = () => {
         overlay.style.animation = "overlay-hide 1s linear forwards";
-        game.startGame(60); // Start the game when an overlay is clicked
+        game.startGame(60); // Start the game when an overlay is clicked and sets it to normal difficulty
+        normalBtn.classList.add('highlighted');
+        easyBtn.classList.remove('highlighted');
+        hardBtn.classList.remove('highlighted');
       };
     });
   
@@ -324,7 +301,6 @@ function startLoading() {
       normalBtn.classList.remove('highlighted');
       hardBtn.classList.remove('highlighted');
       game.startGame(90); // Start the game with easy difficulty (90 seconds)
-      this.resetTimers();
       gameDifficulty = 'easy';
     });
     
@@ -333,7 +309,6 @@ function startLoading() {
       normalBtn.classList.add('highlighted');
       hardBtn.classList.remove('highlighted');
       game.startGame(60); // Start the game with normal difficulty (60 seconds)
-      this.resetTimers();
       gameDifficulty = 'normal';
     });
     
@@ -341,8 +316,7 @@ function startLoading() {
       easyBtn.classList.remove('highlighted');
       normalBtn.classList.remove('highlighted');
       hardBtn.classList.add('highlighted');
-      game.startGame(45); // Start the game with hard difficulty (45 seconds)
-      this.resetTimers();
+      game.startGame(40); // Start the game with hard difficulty (40 seconds)
       gameDifficulty = 'hard';
     });
     

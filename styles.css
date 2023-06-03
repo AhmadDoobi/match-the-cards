@@ -199,7 +199,7 @@ body {
 
 .highlighted {
     /* Style for the highlighted button */
-    background-color: #19aed3;
+    background-color: rgb(32, 35, 101);
     color: #ffffff;
     border: 2px solid #ffffff;
     box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
