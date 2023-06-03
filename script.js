@@ -300,7 +300,7 @@ function startLoading() {
       easyBtn.classList.add('highlighted');
       normalBtn.classList.remove('highlighted');
       hardBtn.classList.remove('highlighted');
-      game.startGame(90); // Start the game with easy difficulty (90 seconds)
+      game.startGame(80); // Start the game with easy difficulty (80 seconds)
       gameDifficulty = 'easy';
     });
     
