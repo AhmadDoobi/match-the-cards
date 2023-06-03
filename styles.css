@@ -231,7 +231,7 @@ body {
     position: absolute;
     top:0;
     left:0;
-    transform: translateY(-20%);
+    transform: translateY(5%);
     background: none; /* Remove the background */
     color: #0f78e1;
     font-size: 1.4em;
