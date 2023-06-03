@@ -283,6 +283,7 @@ function startLoading() {
       overlay.onclick = () => {
         overlay.style.animation = "overlay-hide 1s linear forwards";
         game.startGame(60); // Start the game when an overlay is clicked and sets it to normal difficulty
+        gameDifficulty = 'normal';
         normalBtn.classList.add('highlighted');
         easyBtn.classList.remove('highlighted');
         hardBtn.classList.remove('highlighted');
